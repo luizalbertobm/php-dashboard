@@ -85,7 +85,7 @@ $mysqli = new mysqli("localhost", "root", "root");
   <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/jumbotron/">
 
   <!-- Bootstrap core CSS -->
-  <link href="./Jumbotron Template · Bootstrap_files/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
 
   <!-- Favicons -->
   <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -127,12 +127,10 @@ $mysqli = new mysqli("localhost", "root", "root");
       }
     }
   </style>
-  <!-- Custom styles for this template -->
-  <link href="./Jumbotron Template · Bootstrap_files/jumbotron.css" rel="stylesheet">
 </head>
 
 <body data-gr-c-s-loaded="true" cz-shortcut-listen="true">
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container">
       <!-- <a class="navbar-brand" href="https://getbootstrap.com/docs/4.5/examples/jumbotron/#">Navbar</a> -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -190,7 +188,7 @@ $mysqli = new mysqli("localhost", "root", "root");
 
       <div class="row">
         <?php foreach ($files as $file) { ?>
-          <?php $file_ext = !ext($file) ? "dir" : ext($file);
+          <?php $file_ext = !ext($file) && is_dir($file) ? "dir" : ext($file);
 
 
           switch ($file_ext) {
@@ -263,11 +261,10 @@ $mysqli = new mysqli("localhost", "root", "root");
   <footer class="container">
     <p>© PHP Dashboard 2020 - By Luiz A. Mesquita</p>
   </footer>
-  <script src="./Jumbotron Template · Bootstrap_files/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js" integrity="sha512-/DXTXr6nQodMUiq+IUJYCt2PPOUjrHJ9wFrqpJ3XkgPNOZVfMok7cRw6CSxyCQxXn6ozlESsSh1/sMCTF1rL/g==" crossorigin="anonymous"></script>
   <script>
     window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')
   </script>
-  <script src="./Jumbotron Template · Bootstrap_files/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script>
   <script src="https://use.fontawesome.com/c41c56d25a.js"></script>
 </body>
 
