@@ -225,7 +225,7 @@ $mysqli = new mysqli("localhost", "root", "root");
                   <div class="card-body p-3">
                     <p class="card-text">
                       <?= $file ?> <br>
-                      <small class="text-muted"><?= $file_ext == 'dir' ? get_directory_size($file) : display_size(filesize($file)) ?></small>
+                      <small class="text-muted">Size: <?= $file_ext == 'dir' ? get_directory_size($file) : display_size(filesize($file)) ?></small>
                     </p>
                   </div>
                 </div>
