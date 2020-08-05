@@ -86,6 +86,7 @@ $mysqli = new mysqli("localhost", "root", "root");
 
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
 
   <!-- Favicons -->
   <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -95,6 +96,7 @@ $mysqli = new mysqli("localhost", "root", "root");
   <link rel="mask-icon" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
   <link rel="icon" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/favicon.ico">
   <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
+  
   <meta name="theme-color" content="#563d7c">
 
 
@@ -110,6 +112,8 @@ $mysqli = new mysqli("localhost", "root", "root");
 
     body {
       background-color: #eeeeee;
+      font-family: 'Nunito', sans-serif !important;
+      font-weight: 400;;
     }
 
     .head {
@@ -165,7 +169,7 @@ $mysqli = new mysqli("localhost", "root", "root");
     <div class="head">
       <div class="container">
         <h1 class="display-3">PHP Dashboard</h1>
-
+    <p>A dashboard to be used as a root page for php/localhost servers, giving some shortcuts and useful tools to developers.</p>
         <p>
           <a class="btn btn-primary btn-lg" href="php-dashboard/info.php" role="button"><i class="fa fa-info-circle" aria-hidden="true"></i> PHP Info »</a>
           <a class="btn btn-success btn-lg" href="php-dashboard/adminer" role="button"><i class="fa fa-database" aria-hidden="true"></i> Adminer »</a>
@@ -249,7 +253,7 @@ $mysqli = new mysqli("localhost", "root", "root");
           </button>
         </div>
         <div class="modal-body">
-          This file was created by Luiz Alberto Mesquita, to be used as a root page for localhost servers, giving shortcuts and useful tools
+          This file was created by <a href="mailto:luizalbertobm@gmail.com">Luiz Alberto Mesquita</a>, to be used as a root page for localhost servers, giving shortcuts and useful tools
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -265,6 +269,9 @@ $mysqli = new mysqli("localhost", "root", "root");
   <script>
     window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')
   </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
   <script src="https://use.fontawesome.com/c41c56d25a.js"></script>
 </body>
 
