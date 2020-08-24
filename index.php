@@ -1,8 +1,8 @@
 <?php
 
-ini_set('display_errors', 1);
+/* ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+error_reporting(E_ALL); */
 
 function get_root()
 {
@@ -120,7 +120,10 @@ $mysqli = new mysqli("localhost", "root", "root");
       background-color: #cccccc;
       padding: 20px;
     }
-
+    .card{
+      border-radius: 8px;
+      box-shadow: 3px 3px 5px rgba(0, 0, 0, .1);
+    }
     .card a:hover i {
       color: #ff9900 !important;
     }
@@ -177,7 +180,7 @@ $mysqli = new mysqli("localhost", "root", "root");
         <?php
         if (mysqli_connect_errno()) { ?>
           <div class="alert alert-danger">
-            <strong>Erro na base de dados:</strong> Não foi possível conectar-se com o Mysql. Verifique os dados de acesso.
+            <strong>Database error:</strong> Could not connect to Mysql. Check the access data.
           </div>
         <?php }
         ?>
@@ -224,7 +227,7 @@ $mysqli = new mysqli("localhost", "root", "root");
                 <div class="col-auto">
                   <div class="card-body p-3">
                     <p class="card-text">
-                      <?= $file ?> <br>
+                      <strong><?= $file ?></strong> <br>
                       <small class="text-muted">Size: <?= $file_ext == 'dir' ? get_directory_size($file) : display_size(filesize($file)) ?></small>
                     </p>
                   </div>
