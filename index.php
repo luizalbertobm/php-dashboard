@@ -96,7 +96,7 @@ $mysqli = new mysqli("localhost", "root", "root");
   <link rel="mask-icon" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
   <link rel="icon" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/favicon.ico">
   <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
-  
+
   <meta name="theme-color" content="#563d7c">
 
 
@@ -113,17 +113,20 @@ $mysqli = new mysqli("localhost", "root", "root");
     body {
       background-color: #eeeeee;
       font-family: 'Nunito', sans-serif !important;
-      font-weight: 400;;
+      font-weight: 400;
+      ;
     }
 
     .head {
       background-color: #cccccc;
       padding: 20px;
     }
-    .card{
+
+    .card {
       border-radius: 8px;
       box-shadow: 3px 3px 5px rgba(0, 0, 0, .1);
     }
+
     .card a:hover i {
       color: #ff9900 !important;
     }
@@ -160,7 +163,7 @@ $mysqli = new mysqli("localhost", "root", "root");
           </li> -->
         </ul>
         <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <input id="filter" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
         </form>
       </div>
     </div>
@@ -172,9 +175,10 @@ $mysqli = new mysqli("localhost", "root", "root");
     <div class="head">
       <div class="container">
         <h1 class="display-3">PHP Dashboard</h1>
-    <p>A dashboard to be used as a root page for php/localhost servers, giving some shortcuts and useful tools to developers.</p>
+        <p>A dashboard to be used as a root page for php/localhost servers, giving some shortcuts and useful tools to developers.</p>
         <p>
           <a class="btn btn-primary btn-lg" href="php-dashboard/info.php" role="button"><i class="fa fa-info-circle" aria-hidden="true"></i> PHP Info »</a>
+          <a class="btn btn-secondary btn-lg" href="javascript:void(0)" data-toggle="modal" data-target="#phpIni"><i class="fa fa-file-code-o" aria-hidden="true"></i> PHP.ini »</a>
           <a class="btn btn-success btn-lg" href="php-dashboard/adminer" role="button"><i class="fa fa-database" aria-hidden="true"></i> Adminer »</a>
         </p>
         <?php
@@ -186,7 +190,6 @@ $mysqli = new mysqli("localhost", "root", "root");
         ?>
       </div>
     </div>
-
 
     <div class="container">
       <h3 class="mt-3 mb-0">Files list</h3>
@@ -245,7 +248,7 @@ $mysqli = new mysqli("localhost", "root", "root");
 
   </main>
 
-  <!-- Modal -->
+  <!-- Modal About -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -265,16 +268,41 @@ $mysqli = new mysqli("localhost", "root", "root");
     </div>
   </div>
 
+  <!-- Modal php.ini -->
+  <div class="modal  fade" id="phpIni" tabindex="-1" aria-labelledby="phpIniLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="phpIniLabel">PHP Configuration</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <textarea class="form-control" name="" id="" cols="30" rows="14"><?= file_get_contents(php_ini_loaded_file()); ?></textarea>
+          <span>Current file path: <span class="badge badge-info"><?= php_ini_loaded_file() ?></span></span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer class="container">
     <p>© PHP Dashboard 2020 - By Luiz A. Mesquita</p>
   </footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js" integrity="sha512-/DXTXr6nQodMUiq+IUJYCt2PPOUjrHJ9wFrqpJ3XkgPNOZVfMok7cRw6CSxyCQxXn6ozlESsSh1/sMCTF1rL/g==" crossorigin="anonymous"></script>
   <script>
     window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')
+    $('#filter').keyup(function(){
+      $('.card:not(:contains('+ $(this).val() +'))').parent().hide();
+      $('.card:contains('+ $(this).val() +')').parent().show(); 
+    })
   </script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
   <script src="https://use.fontawesome.com/c41c56d25a.js"></script>
 </body>
 
