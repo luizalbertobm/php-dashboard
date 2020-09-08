@@ -272,7 +272,7 @@ $mysqli = new mysqli("localhost", "root", "root");
           </button>
         </div>
         <div class="modal-body">
-          <textarea class="form-control" name="" id="" cols="30" rows="14"><?= file_get_contents(php_ini_loaded_file()); ?></textarea>
+          <textarea spellcheck="false"  class="form-control bg-secondary text-white" name="" id="" cols="30" rows="14"><?= file_get_contents(php_ini_loaded_file()); ?></textarea>
           <span>Current file path: <span class="badge badge-info"><?= php_ini_loaded_file() ?></span></span>
         </div>
         <div class="modal-footer">
