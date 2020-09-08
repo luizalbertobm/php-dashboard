@@ -152,15 +152,6 @@ $mysqli = new mysqli("localhost", "root", "root");
           <li class="nav-item">
             <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal">About</a>
           </li>
-
-          <!-- <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="https://getbootstrap.com/docs/4.5/examples/jumbotron/#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="https://getbootstrap.com/docs/4.5/examples/jumbotron/#">Action</a>
-              <a class="dropdown-item" href="https://getbootstrap.com/docs/4.5/examples/jumbotron/#">Another action</a>
-              <a class="dropdown-item" href="https://getbootstrap.com/docs/4.5/examples/jumbotron/#">Something else here</a>
-            </div>
-          </li> -->
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <input id="filter" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
@@ -177,9 +168,9 @@ $mysqli = new mysqli("localhost", "root", "root");
         <h1 class="display-3">PHP Dashboard</h1>
         <p>A dashboard to be used as a root page for php/localhost servers, giving some shortcuts and useful tools to developers.</p>
         <p>
-          <a class="btn btn-primary btn-lg" href="php-dashboard/info.php" role="button"><i class="fa fa-info-circle" aria-hidden="true"></i> PHP Info »</a>
-          <a class="btn btn-secondary btn-lg" href="javascript:void(0)" data-toggle="modal" data-target="#phpIni"><i class="fa fa-file-code-o" aria-hidden="true"></i> PHP.ini »</a>
-          <a class="btn btn-success btn-lg" href="php-dashboard/adminer" role="button"><i class="fa fa-database" aria-hidden="true"></i> Adminer »</a>
+          <a class="btn btn-primary btn-lg" href="php-dashboard/info.php" role="button"><i class="fa fa-info-circle" aria-hidden="true"></i> PHP Info</a>
+          <a class="btn btn-info btn-lg" href="javascript:void(0)" data-toggle="modal" data-target="#phpIni"><i class="fa fa-code" aria-hidden="true"></i> PHP.ini</a>
+          <a class="btn btn-success btn-lg" href="php-dashboard/adminer" role="button"><i class="fa fa-database" aria-hidden="true"></i> Adminer</a>
         </p>
         <?php
         if (mysqli_connect_errno()) { ?>
@@ -193,10 +184,10 @@ $mysqli = new mysqli("localhost", "root", "root");
 
     <div class="container">
       <h3 class="mt-3 mb-0">Files list</h3>
-      <p><?= get_root() ?></p>
+      <small> The following files are in: <?= get_root() ?></small>
       <!-- Example row of columns -->
 
-      <div class="row">
+      <div class="row mt-3">
         <?php foreach ($files as $file) { ?>
           <?php $file_ext = !ext($file) && is_dir($file) ? "dir" : ext($file);
 
@@ -204,6 +195,7 @@ $mysqli = new mysqli("localhost", "root", "root");
           switch ($file_ext) {
             case 'txt':
             case 'php':
+            case 'js':
               $icon = 'fa-file-code-o';
               break;
             case 'dir':
@@ -213,6 +205,7 @@ $mysqli = new mysqli("localhost", "root", "root");
             case 'png':
             case 'gif':
             case 'svg':
+            case 'bmp':
               $icon = 'fa-file-image-o';
               break;
             default:
@@ -290,14 +283,14 @@ $mysqli = new mysqli("localhost", "root", "root");
   </div>
 
   <footer class="container">
-    <p>© PHP Dashboard 2020 - By Luiz A. Mesquita</p>
+    <p>© <a href="https://github.com/luizalbertobm/php-dashboard">PHP Dashboard</a> 2020 - By <a href="https://www.linkedin.com/in/luizalbertobm/">Luiz A. Mesquita</a></p>
   </footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js" integrity="sha512-/DXTXr6nQodMUiq+IUJYCt2PPOUjrHJ9wFrqpJ3XkgPNOZVfMok7cRw6CSxyCQxXn6ozlESsSh1/sMCTF1rL/g==" crossorigin="anonymous"></script>
   <script>
     window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')
-    $('#filter').keyup(function(){
-      $('.card:not(:contains('+ $(this).val() +'))').parent().hide();
-      $('.card:contains('+ $(this).val() +')').parent().show(); 
+    $('#filter').keyup(function() {
+      $('.card:not(:contains(' + $(this).val() + '))').parent().hide();
+      $('.card:contains(' + $(this).val() + ')').parent().show();
     })
   </script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
