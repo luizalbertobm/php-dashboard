@@ -68,6 +68,40 @@ if (is_dir(get_root())) {
   }
 }
 
+function embedded_phpinfo()
+{
+    ob_start();
+    phpinfo();
+    $phpinfo = ob_get_contents();
+    ob_end_clean();
+    $phpinfo = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $phpinfo);
+    echo "
+        <style type='text/css'>
+            #phpinfo {}
+            #phpinfo pre {margin: 0; font-family: monospace;}
+            #phpinfo a:link {color: #009; text-decoration: none; background-color: #fff;}
+            #phpinfo a:hover {text-decoration: underline;}
+            #phpinfo table {border-collapse: collapse; border: 0; width: 934px; box-shadow: 1px 2px 3px #ccc;}
+            #phpinfo .center {text-align: center;}
+            #phpinfo .center table {margin: 1em auto; text-align: left;}
+            #phpinfo .center th {text-align: center !important;}
+            #phpinfo td, th {border: 1px solid #666; font-size: 75%; vertical-align: baseline; padding: 4px 5px;}
+            #phpinfo h1 {font-size: 150%;}
+            #phpinfo h2 {font-size: 125%;}
+            #phpinfo .p {text-align: left; display:none}
+            #phpinfo .e {background-color: #ccf; width: 300px; font-weight: bold;}
+            #phpinfo .h {background-color: #99c; font-weight: bold;}
+            #phpinfo .v {background-color: #ddd; max-width: 300px; overflow-x: auto; word-wrap: break-word;}
+            #phpinfo .v i {color: #999;}
+            #phpinfo img {float: right; border: 0;}
+            #phpinfo hr {width: 934px; background-color: #ccc; border: 0; height: 1px;}
+        </style>
+        <div id='phpinfo'>
+            $phpinfo
+        </div>
+        ";
+}
+
 $mysqli = new mysqli("localhost", "root", "root");
 ?>
 <!DOCTYPE html>
@@ -168,7 +202,7 @@ $mysqli = new mysqli("localhost", "root", "root");
         <h1 class="display-3">PHP Dashboard</h1>
         <p>A dashboard to be used as a root page for php/localhost servers, giving some shortcuts and useful tools to developers.</p>
         <p>
-          <a class="btn btn-primary btn-lg" href="php-dashboard/info.php" role="button"><i class="fa fa-info-circle" aria-hidden="true"></i> PHP Info</a>
+          <a class="btn btn-primary btn-lg" href="javascript:void(0)" data-toggle="modal" data-target="#phpInfo"><i class="fa fa-info-circle" aria-hidden="true"></i> PHP Info</a>
           <a class="btn btn-info btn-lg" href="javascript:void(0)" data-toggle="modal" data-target="#phpIni"><i class="fa fa-code" aria-hidden="true"></i> PHP.ini</a>
           <a class="btn btn-success btn-lg" href="php-dashboard/adminer" role="button"><i class="fa fa-database" aria-hidden="true"></i> Adminer</a>
         </p>
@@ -272,8 +306,30 @@ $mysqli = new mysqli("localhost", "root", "root");
           </button>
         </div>
         <div class="modal-body">
-          <textarea spellcheck="false"  class="form-control bg-secondary text-white" name="" id="" cols="30" rows="14"><?= file_get_contents(php_ini_loaded_file()); ?></textarea>
+          <textarea spellcheck="false" class="form-control bg-secondary text-white" name="" id="" cols="30" rows="14"><?= file_get_contents(php_ini_loaded_file()); ?></textarea>
           <span>Current file path: <span class="badge badge-info"><?= php_ini_loaded_file() ?></span></span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal PHP Info -->
+  <div class="modal  fade" id="phpInfo" tabindex="-1" aria-labelledby="phpInfoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="phpInfoLabel">PHP Version: <?= phpversion(); ?></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <?php embedded_phpinfo(); ?>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
