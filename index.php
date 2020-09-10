@@ -4,6 +4,11 @@
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL); */
 
+$action = @$_REQUEST['action'];
+if (!empty($action)) {
+  call_user_func($action);
+  exit;
+}
 function get_root()
 {
   return getcwd() . '/';
@@ -68,14 +73,25 @@ if (is_dir(get_root())) {
   }
 }
 
-function embedded_phpinfo()
+// ajax functions
+function save_inifile()
 {
-    ob_start();
-    phpinfo();
-    $phpinfo = ob_get_contents();
-    ob_end_clean();
-    $phpinfo = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $phpinfo);
-    echo "
+  file_put_contents(php_ini_loaded_file(), $_REQUEST['data']);
+}
+
+function read_phpini()
+{
+  echo file_get_contents(php_ini_loaded_file());
+}
+
+function get_phpinfo()
+{
+  ob_start();
+  phpinfo();
+  $phpinfo = ob_get_contents();
+  ob_end_clean();
+  $phpinfo = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $phpinfo);
+  echo "
         <style type='text/css'>
             #phpinfo {}
             #phpinfo pre {margin: 0; font-family: monospace;}
@@ -129,8 +145,11 @@ $mysqli = new mysqli("localhost", "root", "root");
   <link rel="manifest" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/manifest.json">
   <link rel="mask-icon" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
   <link rel="icon" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/codemirror.min.css" integrity="sha512-/BlxZbYLtYGExexketXsTi47eHp+r2kTeq2OHecQPZlfbc7WFXVrwbVW9HOYjI6c9Ti+P60ASmVLxittZ0EBGw==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/theme/darcula.min.css" integrity="sha512-kqCOYFDdyQF4JM8RddA6rMBi9oaLdR0aEACdB95Xl1EgaBhaXMIe8T4uxmPitfq4qRmHqo+nBU2d1l+M4zUx1g==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/theme/ambiance.min.css" integrity="sha512-wVrMpCao81zIdzAM+fYyuF6BoUXjDO8le2mQXl4iVezdDSgZOCFtpm/AL3LZn9dqc3e4CloZfiZxhTp5UNpWIw==" crossorigin="anonymous" />
+  
   <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
-
   <meta name="theme-color" content="#563d7c">
 
 
@@ -163,6 +182,11 @@ $mysqli = new mysqli("localhost", "root", "root");
 
     .card a:hover i {
       color: #ff9900 !important;
+    }
+
+    .CodeMirror {
+      border: 1px solid #666;
+      height: 500px;
     }
 
     @media (min-width: 768px) {
@@ -202,9 +226,9 @@ $mysqli = new mysqli("localhost", "root", "root");
         <h1 class="display-3">PHP Dashboard</h1>
         <p>A dashboard to be used as a root page for php/localhost servers, giving some shortcuts and useful tools to developers.</p>
         <p>
-          <a class="btn btn-primary btn-lg" href="javascript:void(0)" data-toggle="modal" data-target="#phpInfo"><i class="fa fa-info-circle" aria-hidden="true"></i> PHP Info</a>
-          <a class="btn btn-info btn-lg" href="javascript:void(0)" data-toggle="modal" data-target="#phpIni"><i class="fa fa-code" aria-hidden="true"></i> PHP.ini</a>
-          <a class="btn btn-success btn-lg" href="php-dashboard/adminer" role="button"><i class="fa fa-database" aria-hidden="true"></i> Adminer</a>
+          <a id="btn-phpinfo" class="btn btn-primary btn-lg" href="javascript:void(0)" data-toggle="modal" data-target="#phpInfo"><i class="fa fa-info-circle" aria-hidden="true"></i> PHP Info</a>
+          <a id="btn-phpini" class="btn btn-info btn-lg" href="javascript:void(0)" data-toggle="modal" data-target="#phpIni"><i class="fa fa-code" aria-hidden="true"></i> PHP.ini</a>
+          <a id="btn-adminer" class="btn btn-success btn-lg" href="php-dashboard/adminer" role="button"><i class="fa fa-database" aria-hidden="true"></i> Adminer</a>
         </p>
         <?php
         if (mysqli_connect_errno()) { ?>
@@ -294,7 +318,6 @@ $mysqli = new mysqli("localhost", "root", "root");
       </div>
     </div>
   </div>
-
   <!-- Modal php.ini -->
   <div class="modal  fade" id="phpIni" tabindex="-1" aria-labelledby="phpIniLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -306,10 +329,12 @@ $mysqli = new mysqli("localhost", "root", "root");
           </button>
         </div>
         <div class="modal-body">
-          <textarea spellcheck="false" class="form-control bg-secondary text-white" name="" id="" cols="30" rows="14"><?= file_get_contents(php_ini_loaded_file()); ?></textarea>
-          <span>Current file path: <span class="badge badge-info"><?= php_ini_loaded_file() ?></span></span>
+
+          <span>The current file is located at: <strong><?= php_ini_loaded_file() ?></strong>
+            <textarea spellcheck="false" class="form-control bg-secondary text-white" name="phpini" id="phpini" cols="45" rows="14"></textarea>
         </div>
         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn-save-ini">Save changes</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -327,8 +352,8 @@ $mysqli = new mysqli("localhost", "root", "root");
           </button>
         </div>
         <div class="modal-body">
-          <div class="table-responsive">
-            <?php embedded_phpinfo(); ?>
+          <div class="table-responsive" id="phpinfo">
+
           </div>
         </div>
         <div class="modal-footer">
@@ -341,18 +366,51 @@ $mysqli = new mysqli("localhost", "root", "root");
   <footer class="container">
     <p>© <a href="https://github.com/luizalbertobm/php-dashboard">PHP Dashboard</a> 2020 - By <a href="https://www.linkedin.com/in/luizalbertobm/">Luiz A. Mesquita</a></p>
   </footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js" integrity="sha512-/DXTXr6nQodMUiq+IUJYCt2PPOUjrHJ9wFrqpJ3XkgPNOZVfMok7cRw6CSxyCQxXn6ozlESsSh1/sMCTF1rL/g==" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
+  <script src="https://use.fontawesome.com/c41c56d25a.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/codemirror.min.js" integrity="sha512-K8GMktcEqOI28I3f5C6kraFm1F4wVLvnBxGU+imS/zOLT1COAT799Ln4DJyAbpdyNt6LgMIWcwy4ptCYXCIDqA==" crossorigin="anonymous"></script>
+  
   <script>
-    window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')
+    //window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')
     $('#filter').keyup(function() {
       $('.card:not(:contains(' + $(this).val() + '))').parent().hide();
       $('.card:contains(' + $(this).val() + ')').parent().show();
     })
+
+
+
+    $(document).ready(function() {
+      var cm = new CodeMirror.fromTextArea(document.getElementById('phpini'), {
+        theme: "ambiance",
+        lineNumbers: true,
+        lineWrapping: false,
+      });
+
+      $('#btn-phpinfo').click(function() {
+        $.get("?action=get_phpinfo", function(data) {
+          $("#phpinfo").html(data);
+        });
+      })
+
+      $('#btn-phpini').click(function() {
+        $.get("?action=read_phpini", function(data) {
+          setTimeout(function(params) {
+            cm.getDoc().setValue(data)
+          }, 1000)
+        });
+      })
+
+      $('#btn-save-ini').click(function() {
+        $.post("?action=save_inifile", {
+          data: cm.getValue()
+        }).done(function(data) {
+          alert('Saved successfully. Restart the server for the changes to take effect.')
+        })
+      });
+    });
   </script>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
-  <script src="https://use.fontawesome.com/c41c56d25a.js"></script>
 </body>
 
 </html>
