@@ -146,8 +146,8 @@ $mysqli = new mysqli("localhost", "root", "root");
   <link rel="mask-icon" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
   <link rel="icon" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/favicon.ico">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/codemirror.min.css" integrity="sha512-/BlxZbYLtYGExexketXsTi47eHp+r2kTeq2OHecQPZlfbc7WFXVrwbVW9HOYjI6c9Ti+P60ASmVLxittZ0EBGw==" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/theme/darcula.min.css" integrity="sha512-kqCOYFDdyQF4JM8RddA6rMBi9oaLdR0aEACdB95Xl1EgaBhaXMIe8T4uxmPitfq4qRmHqo+nBU2d1l+M4zUx1g==" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/theme/ambiance.min.css" integrity="sha512-wVrMpCao81zIdzAM+fYyuF6BoUXjDO8le2mQXl4iVezdDSgZOCFtpm/AL3LZn9dqc3e4CloZfiZxhTp5UNpWIw==" crossorigin="anonymous" />
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/theme/darcula.min.css" integrity="sha512-kqCOYFDdyQF4JM8RddA6rMBi9oaLdR0aEACdB95Xl1EgaBhaXMIe8T4uxmPitfq4qRmHqo+nBU2d1l+M4zUx1g==" crossorigin="anonymous" /> -->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/theme/ambiance.min.css" integrity="sha512-wVrMpCao81zIdzAM+fYyuF6BoUXjDO8le2mQXl4iVezdDSgZOCFtpm/AL3LZn9dqc3e4CloZfiZxhTp5UNpWIw==" crossorigin="anonymous" /> -->
   
   <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
   <meta name="theme-color" content="#563d7c">
@@ -371,7 +371,8 @@ $mysqli = new mysqli("localhost", "root", "root");
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
   <script src="https://use.fontawesome.com/c41c56d25a.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/codemirror.min.js" integrity="sha512-K8GMktcEqOI28I3f5C6kraFm1F4wVLvnBxGU+imS/zOLT1COAT799Ln4DJyAbpdyNt6LgMIWcwy4ptCYXCIDqA==" crossorigin="anonymous"></script>
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/mode/properties/properties.min.js" integrity="sha512-KFE2cwTwAMmZ2uQzOh8sRi0pBCHJBXyzbhhELf7gfx0n/m8no2tQpEQDW8dxSNCO1jaNAmFJ5KuXfZ/oCjoLDQ==" crossorigin="anonymous"></script>
+
   <script>
     //window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')
     $('#filter').keyup(function() {
@@ -383,7 +384,8 @@ $mysqli = new mysqli("localhost", "root", "root");
 
     $(document).ready(function() {
       var cm = new CodeMirror.fromTextArea(document.getElementById('phpini'), {
-        theme: "ambiance",
+        // theme: "ambiance",
+        mode: 'properties',
         lineNumbers: true,
         lineWrapping: false,
       });
@@ -398,7 +400,7 @@ $mysqli = new mysqli("localhost", "root", "root");
         $.get("?action=read_phpini", function(data) {
           setTimeout(function(params) {
             cm.getDoc().setValue(data)
-          }, 1000)
+          }, 500)
         });
       })
 
