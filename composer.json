@@ -1,0 +1,12 @@
+{
+    "name": "luiz/php-dashboard",
+    "description": "A dashboard to PHP localhost",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Luiz Alberto Mesquita",
+            "email": "luizalbertobm@gmail.com"
+        }
+    ],
+    "require": {}
+}

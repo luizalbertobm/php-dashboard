@@ -148,7 +148,7 @@ $mysqli = new mysqli("localhost", "root", "root");
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/codemirror.min.css" integrity="sha512-/BlxZbYLtYGExexketXsTi47eHp+r2kTeq2OHecQPZlfbc7WFXVrwbVW9HOYjI6c9Ti+P60ASmVLxittZ0EBGw==" crossorigin="anonymous" />
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/theme/darcula.min.css" integrity="sha512-kqCOYFDdyQF4JM8RddA6rMBi9oaLdR0aEACdB95Xl1EgaBhaXMIe8T4uxmPitfq4qRmHqo+nBU2d1l+M4zUx1g==" crossorigin="anonymous" /> -->
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/theme/ambiance.min.css" integrity="sha512-wVrMpCao81zIdzAM+fYyuF6BoUXjDO8le2mQXl4iVezdDSgZOCFtpm/AL3LZn9dqc3e4CloZfiZxhTp5UNpWIw==" crossorigin="anonymous" /> -->
-  
+
   <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
   <meta name="theme-color" content="#563d7c">
 
@@ -226,9 +226,20 @@ $mysqli = new mysqli("localhost", "root", "root");
         <h1 class="display-3">PHP Dashboard</h1>
         <p>A dashboard to be used as a root page for php/localhost servers, giving some shortcuts and useful tools to developers.</p>
         <p>
-          <a id="btn-phpinfo" class="btn btn-primary btn-lg" href="javascript:void(0)" data-toggle="modal" data-target="#phpInfo"><i class="fa fa-info-circle" aria-hidden="true"></i> PHP Info</a>
-          <a id="btn-phpini" class="btn btn-info btn-lg" href="javascript:void(0)" data-toggle="modal" data-target="#phpIni"><i class="fa fa-code" aria-hidden="true"></i> PHP.ini</a>
-          <a id="btn-adminer" class="btn btn-success btn-lg" href="php-dashboard/adminer" role="button"><i class="fa fa-database" aria-hidden="true"></i> Adminer</a>
+          <a id="btn-phpinfo" class="btn btn-primary btn-lg" href="javascript:void(0)" data-toggle="modal" data-target="#phpInfo">
+            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+            </svg> PHP Info</a>
+          <a id="btn-phpini" class="btn btn-info btn-lg" href="javascript:void(0)" data-toggle="modal" data-target="#phpIni">
+            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M14 2H6C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H18C19.11 22 20 21.11 20 20V8L14 2M18 20H6V4H13V9H18V20M9.54 15.65L11.63 17.74L10.35 19L7 15.65L10.35 12.3L11.63 13.56L9.54 15.65M17 15.65L13.65 19L12.38 17.74L14.47 15.65L12.38 13.56L13.65 12.3L17 15.65Z" />
+            </svg>
+            PHP.ini</a>
+          <a id="btn-adminer" class="btn btn-success btn-lg" href="php-dashboard/adminer" role="button">
+            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M4,14V17C4,19 7.05,20.72 11,21V18.11L11.13,18C7.12,17.76 4,16.06 4,14M12,13C7.58,13 4,11.21 4,9V12C4,14.21 7.58,16 12,16C12.39,16 12.77,16 13.16,16L17,12.12C15.4,12.72 13.71,13 12,13M12,3C7.58,3 4,4.79 4,7C4,9.21 7.58,11 12,11C16.42,11 20,9.21 20,7C20,4.79 16.42,3 12,3M21,11.13C20.85,11.13 20.71,11.19 20.61,11.3L19.61,12.3L21.66,14.3L22.66,13.3C22.87,13.1 22.88,12.76 22.66,12.53L21.42,11.3C21.32,11.19 21.18,11.13 21.04,11.13M19.04,12.88L13,18.94V21H15.06L21.12,14.93L19.04,12.88Z" />
+            </svg>
+            Adminer</a>
         </p>
         <?php
         if (mysqli_connect_errno()) { ?>
@@ -293,6 +304,11 @@ $mysqli = new mysqli("localhost", "root", "root");
         <?php } ?>
       </div>
 
+      <h3>Apache Loaded Modules:</h3>
+      <?php 
+      $apacheModules = apache_get_modules();
+      echo implode(', ', $apacheModules);
+      ?>
       <hr>
 
     </div> <!-- /container -->
