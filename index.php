@@ -253,11 +253,11 @@ $mysqli = new mysqli("localhost", "root", "root");
         <?php }
         ?>
       </div>
-    </div>
+    </div> 
 
     <div class="container">
       <h3 class="mt-3 mb-0">Files list</h3>
-      <small> The following files are in: <?= get_root() ?></small>
+      <small> The following files are located at: <?= get_root() ?></small>
       <!-- Example row of columns -->
 
       <div class="row mt-3">
@@ -300,6 +300,7 @@ $mysqli = new mysqli("localhost", "root", "root");
                     <p class="card-text">
                       <strong><?= $file ?></strong><br>
                       <small class="text-muted">Size: <?= $file_ext == 'dir' ? get_directory_size($file) : display_size(filesize($file)) ?></small>
+
                     </p>
                   </div>
                 </div>
