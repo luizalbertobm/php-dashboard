@@ -19,4 +19,4 @@ A dashboard to be used as a root page for php/localhost servers, giving some sho
 <?php require_once 'php-dashboard/index.php';
 ```
 
-**It is all**
+**It is all !!!**
