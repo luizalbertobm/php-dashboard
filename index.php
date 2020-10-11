@@ -413,4 +413,3 @@ function get_phpinfo()
 </body>
 
 </html>
-<?php $mysqli->close(); ?>
