@@ -8,8 +8,15 @@ A dashboard to be used as a root page for php/localhost servers, giving some sho
 - Projects listing
 - Project filtering
 - PHP info shortcut
-- PHP.ini file preview and path info
+- PHP.ini file viewing and editing
 - Built-in adminer (a better replacement for phpmyadmin)
 
 ## How to use
-Just clone project into localhost root directory.
+- Clone project into localhost root directory
+- create a index.php file
+- put this in index.php:
+```php
+<?php require_once 'php-dashboard/index.php';
+```
+
+**It is all**
