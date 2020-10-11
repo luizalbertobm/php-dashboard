@@ -13,8 +13,8 @@ A dashboard to be used as a root page for php/localhost servers, giving some sho
 
 ## How to use
 - Clone project into localhost root directory
-- create a index.php file
-- put this in index.php:
+- Create a index.php file
+- Put this in index.php:
 ```php
 <?php require_once 'php-dashboard/index.php';
 ```
