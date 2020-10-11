@@ -46,21 +46,10 @@ function get_directory_size($path)
 
 function count_dir_files($dir)
 {
-  $fi = new FilesystemIterator(__DIR__ . "/" . $dir, FilesystemIterator::SKIP_DOTS);
+  $fi = new FilesystemIterator(get_root() . $dir, FilesystemIterator::SKIP_DOTS);
   return iterator_count($fi);
 }
 
-function get_sizedir($path)
-{
-  $bytestotal = 0;
-  $path = realpath($path);
-  if ($path !== false && $path != '' && file_exists($path)) {
-    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS)) as $object) {
-      $bytestotal += $object->getSize();
-    }
-  }
-  return $bytestotal;
-}
 
 $excludedFiles = ['.', '..', 'php-dashboard', 'index.php'];
 $files = [];
@@ -299,7 +288,7 @@ $mysqli = new mysqli("localhost", "root", "root");
                   <div class="card-body p-3">
                     <p class="card-text">
                       <strong><?= $file ?></strong><br>
-                      <small class="text-muted">Size: <?= $file_ext == 'dir' ? get_directory_size($file) : display_size(filesize($file)) ?></small>
+                      <small class="text-muted"><?= $file_ext == 'dir' ? 'Items: '.count_dir_files($file) : 'Size: '.display_size(filesize($file)) ?></small>
                     </p>
                   </div>
                 </div>
