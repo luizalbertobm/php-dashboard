@@ -288,12 +288,7 @@ $mysqli = new mysqli("localhost", "root", "root");
                   <div class="card-body p-3">
                     <p class="card-text">
                       <strong><?= $file ?></strong><br>
-<<<<<<< HEAD
                       <small class="text-muted"><?= $file_ext == 'dir' ? 'Items: '.count_dir_files($file) : 'Size: '.display_size(filesize($file)) ?></small>
-=======
-                      <small class="text-muted">Size: <?= $file_ext == 'dir' ? get_directory_size($file) : display_size(filesize($file)) ?></small>
-
->>>>>>> 20025d954de73b3d973d9e477a72e7897ad8bb1c
                     </p>
                   </div>
                 </div>
