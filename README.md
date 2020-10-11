@@ -2,7 +2,7 @@
 A dashboard to be used as a root page for php/localhost servers, giving some shortcuts and useful tools for developers.
 
 
-![Page Screenshot](https://github.com/luizalbertobm/php-dashboard/screen.png)
+![Page Screenshot](https://github.com/luizalbertobm/php-dashboard/blob/master/screen.png)
 
 ## Features
 - Projects listing
