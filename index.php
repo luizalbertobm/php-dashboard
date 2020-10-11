@@ -107,7 +107,6 @@ function get_phpinfo()
         ";
 }
 
-$mysqli = new mysqli("localhost", "root", "root");
 ?>
 <!DOCTYPE html>
 <!-- saved from url=(0053)https://getbootstrap.com/docs/4.5/examples/jumbotron/ -->
@@ -234,19 +233,12 @@ $mysqli = new mysqli("localhost", "root", "root");
             </svg>
             Adminer</a>
         </p>
-        <?php
-        if (mysqli_connect_errno()) { ?>
-          <div class="alert alert-danger">
-            <strong>Database error:</strong> Could not connect to Mysql. Check the access data.
-          </div>
-        <?php }
-        ?>
       </div>
     </div> 
 
     <div class="container">
       <h3 class="mt-3 mb-0">Files list</h3>
-      <small> The following files are located at: <?= get_root() ?></small>
+      <small class="badge badge-secondary"> The following files are located at: <span><?= get_root() ?></span> </small>
       <!-- Example row of columns -->
 
       <div class="row mt-3">
