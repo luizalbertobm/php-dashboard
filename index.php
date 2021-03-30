@@ -163,20 +163,21 @@ function get_phpinfo()
       border: 1px solid #666;
       height: 500px;
     }
-    
-    .projects a, .projects a svg{
+
+    .projects a,
+    .projects a svg {
       color: #666666;
     }
 
-    .projects a:hover{
+    .projects a:hover {
       text-decoration: none;
     }
 
-    .projects a .card{
+    .projects a .card {
       transition: all .1s ease-in;
     }
 
-    .projects a:hover .card{
+    .projects a:hover .card {
       /* background-color: #eeeeee; */
       transform: scale(1.05);
     }
@@ -234,7 +235,7 @@ function get_phpinfo()
             Adminer</a>
         </p>
       </div>
-    </div> 
+    </div>
 
     <div class="container">
       <h3 class="mt-3 mb-0">Files list</h3>
@@ -270,22 +271,22 @@ function get_phpinfo()
           ?>
 
           <div class="col-md-4 projects">
-          <a href="<?= $file ?>">
-          <div class="card  mb-4">
-              <div class="row no-gutters">
-                <div class="col-auto pt-3 pb-3 pl-3">
-                  <?= $icon ?>
-                </div>
-                <div class="col-auto">
-                  <div class="card-body p-3">
-                    <p class="card-text">
-                      <strong><?= $file ?></strong><br>
-                      <small class="text-muted"><?= $file_ext == 'dir' ? 'Items: '.count_dir_files($file) : 'Size: '.display_size(filesize($file)) ?></small>
-                    </p>
+            <a href="<?= $file ?>">
+              <div class="card  mb-4">
+                <div class="row no-gutters">
+                  <div class="col-auto pt-3 pb-3 pl-3">
+                    <?= $icon ?>
+                  </div>
+                  <div class="col-auto">
+                    <div class="card-body p-3">
+                      <p class="card-text">
+                        <strong><?= $file ?></strong><br>
+                        <small class="text-muted"><?= $file_ext == 'dir' ? 'Items: ' . count_dir_files($file) : 'Size: ' . display_size(filesize($file)) ?></small>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
           </div>
 
         <?php } ?>
@@ -333,6 +334,8 @@ function get_phpinfo()
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" id="btn-save-ini">Save changes</button>
+          <button type="button" class="btn btn-success" onclick="restartServer()">Restart server</button>
+          <button type="button" class="btn btn-danger" onclick="stopServer()">Stop server</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -377,7 +380,17 @@ function get_phpinfo()
       $('.card:contains(' + $(this).val() + ')').parent().parent().show();
     })
 
+    function restartServer() {
+      $.get("restart-server.php", function(data) {
+        alert('The server was restarted')
+      });
+    }
 
+    function stopServer() {
+      $.get("stop-server.php", function(data) {
+        alert('The server is stopped')
+      });
+    }
 
     $(document).ready(function() {
       var cm = new CodeMirror.fromTextArea(document.getElementById('phpini'), {
